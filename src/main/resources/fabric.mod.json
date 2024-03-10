@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "stapi-fast-intro",
+  "version": "${version}",
+
+  "name": "StAPI No Annoying Intro",
+  "description": "Removes the LONG ASS INTRO that shows up when you launch the game or reload a texture pack",
+  "authors": [
+    "Vic is a Cat"
+  ],
+  "contact": {
+    "homepage": "https://github.com/viciscat/stapi-fast-intro",
+    "sources": "https://github.com/viciscat/stapi-fast-intro",
+    "issues": "https://github.com/viciscat/stapi-fast-intro/issues"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/stapi-fast-intro/icon.png",
+
+  "environment": "client",
+  "entrypoints": {},
+  "mixins": [
+    "stapi-fast-intro.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3",
+    "stationapi": ">=2.0-alpha.1.1"
+  }
+}
