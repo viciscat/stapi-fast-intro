@@ -3,6 +3,7 @@ package io.github.viciscat.mixin;
 import com.google.common.primitives.Floats;
 import cyclops.control.Option;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.Tessellator;
 import net.modificationstation.stationapi.api.client.resource.ReloadScreenManager;
 import net.modificationstation.stationapi.api.resource.ResourceReload;
 import org.lwjgl.opengl.GL11;
@@ -31,6 +32,7 @@ public abstract class ReloadScreenMixin extends Screen {
     @Shadow(remap = false) @Final private Screen parent;
 
     @Shadow(remap = false) private float progress;
+    @Shadow @Final private Tessellator tessellator;
     @Unique
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 
@@ -68,10 +70,25 @@ public abstract class ReloadScreenMixin extends Screen {
     private void renderEarly() {
         GL11.glBindTexture(3553, minecraft.textureManager.getTextureId("/title/mojang.png"));
         fill(0, 0, width, height, 0xFFFFFFFF);
-        minecraft.method_2109((width-256)/2, (height-256)/2, 0, 0, 256, 256);
+        drawMojangLogoQuad((width-256)/2, (height-256)/2);
         GL11.glEnable(GL11.GL_BLEND);
         renderText(Color.BLACK, false);
         GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    /**
+     * See {@link net.minecraft.client.Minecraft#method_2109(int, int, int, int, int, int)}
+     */
+    @Unique
+    private void drawMojangLogoQuad(int i, int j) {
+        float f = 0.00390625f;
+        float f2 = 0.00390625f;
+        tessellator.startQuads();
+        tessellator.vertex(i, j + 256, 0.0, 0, 256 * f2);
+        tessellator.vertex(i + 256, j + 256, 0.0, 256 * f, 256 * f2);
+        tessellator.vertex(i + 256, j, 0.0, 256 * f, 0);
+        tessellator.vertex(i, j, 0.0, 0, 0);
+        tessellator.draw();
     }
 
     @Unique
